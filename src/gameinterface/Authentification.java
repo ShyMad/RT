@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Authentification extends JFrame {
 
@@ -30,6 +32,7 @@ public class Authentification extends JFrame {
 	private JTextField txtNom;
 	private JTextField txtCode;
 	private JLabel lblInfo;
+	private JButton btnLogIn;
 
 	/**
 	 * Launch the application.
@@ -66,19 +69,8 @@ public class Authentification extends JFrame {
 		lblAuthentification.setBounds(44, 30, 145, 32);
 		contentPane.add(lblAuthentification);
 		
-		JButton btnLogIn = new JButton("Entrer");
-		btnLogIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(check()) {
-						setVisible(false);
-				        new ClientGame().setVisible(true);
-				}else {
-					 lblInfo.setText("Nom ou code incorrect !");
-				}
-				}
-					
-			
-		});
+		btnLogIn = new JButton("Entrer");
+		
 		btnLogIn.setBackground(new Color(0, 128, 0));
 		btnLogIn.setBounds(386, 115, 89, 23);
 		contentPane.add(btnLogIn);
@@ -88,6 +80,12 @@ public class Authentification extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		txtNom = new JTextField();
+		txtNom.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				lblInfo.setText("");
+			}
+		});
 		txtNom.setBounds(165, 88, 204, 20);
 		contentPane.add(txtNom);
 		txtNom.setColumns(10);
@@ -98,8 +96,14 @@ public class Authentification extends JFrame {
 		contentPane.add(lblInfo);
 		
 		txtCode = new JTextField();
-		txtCode.setForeground(new Color(253, 245, 230));
-		txtCode.setText("Guess5");
+		txtCode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				lblInfo.setText("");
+			}
+		});
+		
+		txtCode.setForeground(Color.BLACK);
 		txtCode.setBounds(165, 136, 204, 20);
 		contentPane.add(txtCode);
 		txtCode.setColumns(10);
@@ -107,6 +111,21 @@ public class Authentification extends JFrame {
 		JLabel lblVotreCode = new JLabel("Votre Code:");
 		lblVotreCode.setBounds(44, 139, 73, 14);
 		contentPane.add(lblVotreCode);
+		
+		btnLogIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(check()) {
+						setVisible(false);
+						lblInfo.setText("");
+				        new ClientGame().setVisible(true);
+				        
+				}else {
+					 lblInfo.setText("Nom ou code incorrect !");
+				}
+				}
+					
+			
+		});
 	}
 	public boolean check() {
 		File file = new File("authFile.txt");
@@ -140,7 +159,7 @@ public class Authentification extends JFrame {
 	    	 }
 		if(err!=0) {
 			ok = false;
-			System.err.println("Error");
+			//System.err.println("Error");
 			}
 		} catch (FileNotFoundException e) {
 		      e.printStackTrace();
@@ -149,4 +168,5 @@ public class Authentification extends JFrame {
 	    }
 		return ok;
 	}
+	
 }
