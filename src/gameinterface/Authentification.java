@@ -145,20 +145,6 @@ public class Authentification extends JFrame {
 		btnMenu.setBounds(22, 359, 133, 23);
 		contentPane.add(btnMenu);
 		
-		/*btnLogIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(check()) {
-						setVisible(false);
-						lblInfo.setText("");
-				       // new ClientGame().setVisible(true);
-				        
-				}else {
-					 lblInfo.setText("Nom ou code incorrect !");
-				}
-				}
-					
-			
-		});*/
 	}
 	public boolean check() {
 		File file = new File("authFile.txt");
@@ -186,6 +172,8 @@ public class Authentification extends JFrame {
 	             this.nomPrenom=tab[0]+" "+tab[1];
 	             ok = true;
 	             err = 0;
+	             br.close();
+	             break;
 	             }
 	         else
 	             err++;

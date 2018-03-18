@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import entity.ClientMM;
+
 public class Menu extends JFrame{
 	
 	private JPanel contentPane;
@@ -55,7 +57,8 @@ public class Menu extends JFrame{
 		btnStartGame.setBackground(new Color(100, 149, 237));
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		        new ClientGame(nomPrenom).setVisible(true);
+				new ClientMM(nomPrenom);
+		        //new ClientGame(nomPrenom).setVisible(true);
 		        setVisible(false);
 			}
 		});
@@ -75,7 +78,7 @@ public class Menu extends JFrame{
 		contentPane.add(btnStatistics);
 		
 		//Bouton se deconnecter
-		JButton btnDeconnecter = new JButton("Se déconnecter");
+		JButton btnDeconnecter = new JButton("Se dï¿½connecter");
 		btnDeconnecter.setBackground(new Color(100, 149, 237));
 		btnDeconnecter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
