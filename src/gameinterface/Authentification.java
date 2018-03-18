@@ -30,6 +30,8 @@ public class Authentification extends JFrame {
 	private JTextField txtNom;
 	private JTextField txtCode;
 	private JLabel lblInfo;
+	private String nomPrenom;
+
 
 	/**
 	 * Launch the application.
@@ -52,11 +54,12 @@ public class Authentification extends JFrame {
 	 */
 	public Authentification() {
 		setResizable(false);
-		setTitle("Connection");
+		setTitle("Connexion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 533, 244);
+		setBounds(100, 100, 606, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(255, 215, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -69,9 +72,9 @@ public class Authentification extends JFrame {
 		JButton btnLogIn = new JButton("Entrer");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(check()) {
-						setVisible(false);
-				        new ClientGame().setVisible(true);
+				if(check()) {					
+				        new Menu(nomPrenom).setVisible(true);
+				        setVisible(false);
 				}else {
 					 lblInfo.setText("Nom ou code incorrect !");
 				}
@@ -98,8 +101,8 @@ public class Authentification extends JFrame {
 		contentPane.add(lblInfo);
 		
 		txtCode = new JTextField();
-		txtCode.setForeground(new Color(253, 245, 230));
-		txtCode.setText("Guess5");
+		//txtCode.setForeground(new Color(253, 245, 230));
+		//txtCode.setText("Guess5");
 		txtCode.setBounds(165, 136, 204, 20);
 		contentPane.add(txtCode);
 		txtCode.setColumns(10);
@@ -130,7 +133,8 @@ public class Authentification extends JFrame {
 	        //  System.out.println(stri);
 	         String[] tab= stri.split(" ");
 	         if(tab[0].compareTo(txtNom.getText())==0 && tab[2].compareTo(txtCode.getText())==0){
-	             System.out.println("Welcome "+tab[0]);
+	             System.out.println("Welcome "+tab[0]+" "+tab[1]);
+	             this.nomPrenom=tab[0]+" "+tab[1];
 	             ok = true;
 	             err = 0;
 	             }
@@ -140,7 +144,7 @@ public class Authentification extends JFrame {
 	    	 }
 		if(err!=0) {
 			ok = false;
-			System.err.println("Error");
+			//System.err.println("Error");
 			}
 		} catch (FileNotFoundException e) {
 		      e.printStackTrace();
