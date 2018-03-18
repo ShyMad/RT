@@ -36,6 +36,7 @@ public class CreerCompte extends JFrame {
 	private JButton btnConnexion;
 	private JButton btnAjouter;
 	private String Code;
+	private JButton btnAccueil;
 
 	/**
 	 * Launch the application.
@@ -115,11 +116,12 @@ public class CreerCompte extends JFrame {
 		setTitle("Guess5");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300) ;
+		setBounds(100, 100, 606, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.setBackground(new Color(255, 215, 0));
 		
 		txtNom = new JTextField() ;
 		txtNom.addKeyListener(new KeyAdapter() {
@@ -169,9 +171,25 @@ public class CreerCompte extends JFrame {
 		contentPane.add(lblSuccess);
 		
 		btnConnexion = new JButton("Se Connecter");
+		btnConnexion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				new Authentification().setVisible(true);
+			}
+		});
 		btnConnexion.setBackground(new Color(32, 178, 170));
 		btnConnexion.setBounds(272, 200, 123, 23);
 		contentPane.add(btnConnexion);
+		
+		btnAccueil = new JButton("Accueil");
+		btnAccueil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				new FirstInterface().getFrmGuess().setVisible(true);;
+			}
+		});
+		btnAccueil.setBounds(49, 381, 89, 23);
+		contentPane.add(btnAccueil);
 		
 		btnAjouter.addActionListener(new ActionListener() {
 			

@@ -52,4 +52,11 @@ public class Partie {
         this.duree = duree;
     }
     
+    public boolean comparer(String motInsere,String motSecret){
+    	if( motInsere.equalsIgnoreCase(motSecret)==true){
+    		return true;
+    	}
+    	else return false;
+    }
+    
 }
