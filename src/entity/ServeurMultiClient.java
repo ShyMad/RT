@@ -56,6 +56,8 @@ public class ServeurMultiClient{
 	                if(tab[0].compareTo(nom)==0 && tab[2].compareTo(code) == 0){
 	                    response = true;
 	                    err = 0;
+	                    br.close();
+	                    break;
 	                }
 	                else
 	                    err++;
@@ -75,7 +77,7 @@ public class ServeurMultiClient{
     public static void main(String[] args) {
         ServerSocket socket;
         try {
-        socket = new ServerSocket(6002);
+        socket = new ServerSocket(6004);
         Thread t = new Thread(new Service(socket));
         t.start();
         System.out.println("J'attends des connexions mais pas trop!");

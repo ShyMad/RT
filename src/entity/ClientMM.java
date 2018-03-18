@@ -22,8 +22,8 @@ public class ClientMM {
 	  	BufferedReader in;
 	  	PrintWriter out;
 	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6002
-	           socket = new Socket("localhost",6002);
+	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6004
+	           socket = new Socket("localhost",6004);
 
 	  	//attente d'une reponse - lecture
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));

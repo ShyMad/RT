@@ -66,9 +66,9 @@ public class ClientGame extends JFrame {
 		for(int i = 0 ; i < 5 ; i++){
 		  char c = (char)(rand.nextInt(26) + 97);
 		  str += c;
-		  System.out.print(c+" ");
 		}
-		motSecret=str;
+		motSecret=str.toUpperCase();
+		System.out.print(motSecret);
 		partie = new Partie(str);
 		setTitle("Guess5");
 		setResizable(false);
@@ -112,9 +112,22 @@ public class ClientGame extends JFrame {
 		
 		//Bouton Envoyer
 		JButton btnSend = new JButton("Envoyer");
+		JLabel lblCorrectPlace = new JLabel("Nombre de lettres correctement placées: ");
+		//lblCorrectPlace.setBounds(50, 200, 600, 30);
+		lblCorrectPlace.setFont(new Font("Tahoma", Font.CENTER_BASELINE, 16));
+		
+		JTextPane textListWords = new JTextPane();
+		textListWords.setEditable(false);
+		textListWords.setText(lblCorrectPlace.getText());
+		textListWords.setBackground(new Color(238, 232, 170));
+		textListWords.setBounds(89, 96, 410, 197);
+		contentPane.add(textListWords);
+		
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				contentPane.add(lblCorrectPlace);
 				if(partie.comparer(txtWord.getText(), motSecret) == true){
+					// Le joueur trouve le mot 
 					fin();
 					temps();
 					timer.cancel();
@@ -122,7 +135,19 @@ public class ClientGame extends JFrame {
 					//System.out.println("debut: "+debut+"fin: "+fin+"temps: "+temps);
 					lblResultat.setForeground(new Color(0, 255, 0));
 				}
-				else {
+				else {   // Le joueur n'a pas trouvé le mot 
+					int comptCorrectPlace=0;
+					for(int i=0;i<5;i++){
+						// Nombre de lettres correctement placées
+						if(txtWord.getText().charAt(i)==motSecret.charAt(i)){
+							comptCorrectPlace++;
+						}			
+					}		
+					// Afficher le nombre de lettres correctement placées
+					lblCorrectPlace.setText("Nombre de lettres correctement placées: "+String.valueOf(comptCorrectPlace));
+					textListWords.setText(lblCorrectPlace.getText());
+					contentPane.add(textListWords);
+					// Afficher le fait qu'il n'a pas trouvé le mot 
 					lblResultat.setText("Vous avez raté le mot. Dommage!");
 					lblResultat.setForeground(new Color(255, 0, 0));
 					}
@@ -148,12 +173,6 @@ public class ClientGame extends JFrame {
 				txtWord.setCaretPosition(pos);
 		    }
 		});
-		
-		JTextPane textListWords = new JTextPane();
-		textListWords.setEditable(false);
-		textListWords.setBackground(new Color(238, 232, 170));
-		textListWords.setBounds(89, 96, 410, 197);
-		contentPane.add(textListWords);
 		
 		JLabel lblTitle = new JLabel("Guess5!");
 		lblTitle.setFont(new Font("Trebuchet MS", Font.BOLD, 28));
