@@ -3,7 +3,14 @@ package entity;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
+
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.ServerSocket;
@@ -77,7 +84,7 @@ public class ServeurMultiClient{
     public static void main(String[] args) {
         ServerSocket socket;
         try {
-        socket = new ServerSocket(6009);
+        socket = new ServerSocket(6010);
         Thread t = new Thread(new Service(socket));
         t.start();
         System.out.println("J'attends des connexions mais pas trop!");
@@ -93,10 +100,14 @@ class Service implements Runnable{
 	private static int nbrclient = 0;
 	private static final int nbMaxClient =10;
 	private boolean closeConnexion=false;
+	private boolean FIND = false;
+	public List<String> game = new ArrayList<String>();
+	
         public Service(ServerSocket socket){
             socketserveur = socket;
         }
         
+        //La fonction genWord()
     	public String genWord(){
     		Random rand = new Random();
             String str="";
@@ -153,6 +164,105 @@ class Service implements Runnable{
     		    }
     			return ok;
     		}
+    	   
+    	   //La fonction makeFileForClient
+    	   public void makeFileForClient(String code, String line){
+    		   File file = new File(code+".txt");
+    	       
+    	       FileWriter fw;
+    	        try {
+    	           //Cr√©ation de l'objet
+    	           fw = new FileWriter(file,true);
+    	          //On √©crit la cha√Æne
+    	           fw.write(line+"\n");
+    	       	 //PrintStream fileStream = new PrintStream(file);
+    	       	 //fileStream.println(player);
+    	           //On ferme le flux
+    	           fw.close();
+    	       }catch (FileNotFoundException e) {
+    	           e.printStackTrace();
+    	         } catch (IOException e) {
+    	           e.printStackTrace();
+    	         }
+    	   }
+    	   //La fonction checkWord
+    	   public String checkWord(String word) {
+    		   String[] parts = word.split(" ");
+    		   String code = parts[0];
+    		   String mot = parts[1];
+    		   String state = "";
+    		   for(String c : game) {
+    			   String[] line = c.split(" ");
+    			   if(code.equals(line[0])) {
+    				   if(mot.equals(line[2])) {
+    					   FIND = true;
+    					   state = line[2]+" "+mot+" "+DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date())+" "+"Match";
+    				   }else
+    					   state = line[2]+" "+mot+" "+DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date())+" "+"unMatch";
+    			   }else
+    				   System.err.println("joueur introuvable!");
+    			   
+    		   }
+    		   return state;
+    	   }
+    	   
+    		public String CreatePlayer(String nom, String prenom) throws FileNotFoundException {
+    			Joueur j = null;
+    			//String nom = txtNom.getText();
+    			//String prenom = txtPrenom.getText();
+    			String code="";
+    			Random rand = new Random();
+    	        int str=0;
+    	        int randomNum = 0;
+    	        String part = "" ;
+    	       	for(int i = 0 ; i < 5 ; i++){
+    			  //char c = (char)(rand.nextInt(26) + 97);
+    			  randomNum = rand.nextInt((10 - 1) + 1) + 1;
+    			  str += randomNum;
+    			  //System.out.print(c+" ");
+    	       	}
+    	       	
+    			if((nom!="" || prenom!="")&&(nom.length()>=2) && prenom.length()>=2) {
+    				part = nom.toLowerCase().substring(0,2).concat(prenom.toLowerCase().substring(0,2)).concat(""+str);
+    				j = new Joueur(nom,prenom,part);
+    				code = part;
+    				 String player = j.getNom()+" "+j.getPrenom()+" "+j.getCodeLicencie();
+    			        File file = new File("authFile.txt");
+    			        
+    			        FileWriter fw;
+    			         try {
+    			            //Création de l'objet
+    			            fw = new FileWriter(file,true);
+    			           //On écrit la chaîne
+    			            fw.write(player+"\n");
+    			        	 //PrintStream fileStream = new PrintStream(file);
+    			        	 //fileStream.println(player);
+    			            //On ferme le flux
+    			            fw.close();
+    			        }catch (FileNotFoundException e) {
+    			            e.printStackTrace();
+    			          } catch (IOException e) {
+    			            e.printStackTrace();
+    			          }
+    			        // btnAjouter.setEnabled(false);
+    			         //lblSuccess.setText("Votre code: "+part);
+    			         return part;
+    			            //this.setVisible(false);
+    				       // new ClientGame().setVisible(true);
+    			         
+    			
+    			}else {
+    				 //btnAjouter.setEnabled(false);
+    				//lblSuccess.setText("Inserer Votre Nom et Prenom");
+    				return null;
+    				/*JOptionPane.showMessageDialog(this,
+    					    "Entrer votre nom et prenom.",
+    					    "Inane error",
+    					    JOptionPane.ERROR_MESSAGE);*/
+    			}
+    			
+    		}
+
     	
      
         public void run(){
@@ -191,33 +301,36 @@ class Service implements Runnable{
 		    switch(tabCommand[0]){
             case "SEND":  
             	// SEND [ ] NOM [ ] PRENOM
-            	/*String word = tabCommand[1]+" "+tabCommand[2];
-                makeFileForClient(tabCommand[1], checkWord(word));
-                toSend = checkWord(word)+"*****";
-                if(FIND)
+            	String word = tabCommand[1]+" "+tabCommand[2];
+                //makeFileForClient(tabCommand[1], checkWord(word));
+            	 //toSend = checkWord(word)+"*****";
+                /*if(FIND)
                 	toSend = "MATCH";
                 else
                 	toSend = "unMATCH";*/
-            	toSend = "send"; 
+            	toSend = "SEND "+CreatePlayer(tabCommand[1],tabCommand[2]);
                 break;
             case "AUTH":
             	//AUTH [] NOM [] CODE
             	String nom = tabCommand[1];
             	String code = tabCommand[2];
             	if(check(nom, code))
-            		{toSend = "true";
+            		{toSend = "AUTH true";
+            		System.out.println("truuue");
             		}
             	else
-            		{toSend = "false";
+            		{toSend = "AUTH false";
+            		System.out.println("faaalse");
             		}
                 break;
             case "QUIT":
-              toSend = "Communication terminÈe"; 
+              toSend = "QUIT Communication terminÈe"; 
               nbrclient --;
               //closeConnexion = true;
               break;
             default :             	
             	String mot = genWord();
+            	game.add(tabCommand[1]+" "+tabCommand[2]+" "+mot+" "+DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date()));
             	System.out.println("le mot généré :"+mot);
                 toSend = mot;       
                break;

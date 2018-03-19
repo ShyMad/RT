@@ -197,14 +197,20 @@ public class CreerCompte extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				try {
+				//try {
 					new ClientMM("SEND",txtNom.getText(),txtPrenom.getText());
-					CreatePlayer();
+					if(!ClientMM.isSend().equalsIgnoreCase("null")) {					
+					 // btnAjouter.setEnabled(false);
+   			         lblSuccess.setText("Votre code: "+ClientMM.isSend());  			      
+				}else {
+					 //lblInfo.setText("Nom ou code incorrect !");
+				}
+					//CreatePlayer();
 					
-				} catch (FileNotFoundException e) {
+				/*} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			}
 		});
 	}

@@ -18,14 +18,16 @@ import java.io.PrintWriter;
 public class ClientMM {
 	private static String nomPrenom;
 	private static boolean auth = false;
+	private static String send="";
+
 	public ClientMM(){
 		this.nomPrenom= nomPrenom;
 	      Socket socket;
 	  	BufferedReader in;
 	  	PrintWriter out;
 	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6009
-	           socket = new Socket("localhost",6009);
+	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6010
+	           socket = new Socket("localhost",6010);
 
 	  	//attente d'une reponse - lecture
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
@@ -60,8 +62,8 @@ public class ClientMM {
 	  	BufferedReader in;
 	  	PrintWriter out;
 	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6009
-	           socket = new Socket("localhost",6009);
+	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6010
+	           socket = new Socket("localhost",6010);
 
 	  	//attente d'une reponse - lecture
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
@@ -79,9 +81,22 @@ public class ClientMM {
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
 	  	message_distant = in.readLine();
 	  	System.out.println("message rep:"+ message_distant);
-	  	if(message_distant.equalsIgnoreCase("true")){
-	  		auth = true;
-	  	}else auth=false;
+	  	String[] type = message_distant.split(" ");
+	  	switch(type[0]){
+	  	case "AUTH": {	if(type[1].equalsIgnoreCase("true")){
+	  					auth = true;
+					  	}else if (type[1].equalsIgnoreCase("false")) auth=false;
+					  	}
+	  				break;
+	  	case "SEND": if(message_distant!=null)
+	  				send = type[1];
+	  				else send="null";
+	  				break;
+	  	case "QUIT": break;
+	  	default: send=type[0];
+	  				
+	  	}
+	  	
 	          //fermeture de la connexion
 	  	socket.close();
 
@@ -99,8 +114,8 @@ public class ClientMM {
 		return auth;
 	}
 
-	public static void setAuth(boolean auth) {
-		ClientMM.auth = auth;
+    public static String isSend() {
+		return send;
 	}
 
 	public static void main(String[] args) {
