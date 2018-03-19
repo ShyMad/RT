@@ -331,7 +331,6 @@ class Service implements Runnable{
             default :             	
             	String mot = genWord();
             	game.add(tabCommand[1]+" "+tabCommand[2]+" "+mot+" "+DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date()));
-            	System.out.println("le mot généré :"+mot);
                 toSend = mot;       
                break;
          }

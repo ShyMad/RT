@@ -141,7 +141,7 @@ public class ClientGame extends JFrame {
 					lblResultat.setForeground(new Color(0, 255, 0));
 				}
 				else {   // Le joueur n'a pas trouvé le mot 
-					
+							System.out.println("le mot généré :"+motSecret);
 								/* ******Nombre de lettres correctement placées******** */
 								int comptCorrectPlace=0;
 								for(int i=0;i<5;i++){
