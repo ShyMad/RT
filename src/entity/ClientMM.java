@@ -19,43 +19,10 @@ public class ClientMM {
 	private static String nomPrenom;
 	private static boolean auth = false;
 	private static String send="";
-
-	public ClientMM(){
-		this.nomPrenom= nomPrenom;
-	      Socket socket;
-	  	BufferedReader in;
-	  	PrintWriter out;
-	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6012
-	           socket = new Socket("localhost",6012);
-
-	  	//attente d'une reponse - lecture
-	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
-	  	String message_distant = in.readLine();
-	  	System.out.println("message :"+ message_distant);
-
-	  	//reponse par politesse
-	  	out = new PrintWriter(socket.getOutputStream());
-	  	if(message_distant.contains("Bonjour")){
-	  		out.println("QUIT");
-            	System.out.println("quitRequest");
-	  		}else{out.println("impoli!");}
-	  	out.flush();
-
-	  	//attente d'une reponse - lecture
-	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
-	  	message_distant = in.readLine();
-	  	System.out.println("message:"+ message_distant);
-
-	          //fermeture de la connexion
-	  	socket.close();
-
-	          }catch (UnknownHostException e) {
-	  		 e.printStackTrace();
-	          }catch (IOException e) {
-	              e.printStackTrace();
-	          }
-	}
+	
+	/**
+	 * Constructeur pour deconnecter
+	 */
 	
 	public ClientMM(String fct,String nom,String code){
 	      Socket socket;

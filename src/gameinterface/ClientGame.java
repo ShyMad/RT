@@ -42,22 +42,6 @@ public class ClientGame extends JFrame {
 
 
 	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientGame frame = new ClientGame("secret",this.nomPrenom);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the frame.
 	 */
 	/**
@@ -88,19 +72,10 @@ public class ClientGame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		/*JButton btnStartGame = new JButton("Lancer une partie");
-		btnStartGame.setBackground(new Color(100, 149, 237));
-		btnStartGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnStartGame.setBounds(37, 373, 135, 23);
-		contentPane.add(btnStartGame);*/
-		
 		JButton btnExit = new JButton("Abandonner");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new ClientMM();
+				new ClientMM("QUIT",nom,code);
 		        new Menu(nom,code).setVisible(true);
 		        setVisible(false);
 			}
