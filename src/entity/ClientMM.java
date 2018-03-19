@@ -26,8 +26,8 @@ public class ClientMM {
 	  	BufferedReader in;
 	  	PrintWriter out;
 	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6010
-	           socket = new Socket("localhost",6010);
+	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6011
+	           socket = new Socket("localhost",6011);
 
 	  	//attente d'une reponse - lecture
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
@@ -62,8 +62,8 @@ public class ClientMM {
 	  	BufferedReader in;
 	  	PrintWriter out;
 	          try {
-	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6010
-	           socket = new Socket("localhost",6010);
+	  	//demande d'ouverture d'une connexion sur le serveur local et le numero de port 6011
+	           socket = new Socket("localhost",6011);
 
 	  	//attente d'une reponse - lecture
 	  	in = new BufferedReader (new InputStreamReader (socket.getInputStream()));

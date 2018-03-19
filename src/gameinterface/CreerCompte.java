@@ -186,7 +186,7 @@ public class CreerCompte extends JFrame {
 		btnAccueil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
-				new FirstInterface().getFrmGuess().setVisible(true);;
+				new FirstInterface().getFrmGuess().setVisible(true);
 			}
 		});
 		btnAccueil.setBounds(49, 381, 89, 23);
@@ -201,7 +201,7 @@ public class CreerCompte extends JFrame {
 					new ClientMM("SEND",txtNom.getText(),txtPrenom.getText());
 					if(!ClientMM.isSend().equalsIgnoreCase("null")) {					
 					 // btnAjouter.setEnabled(false);
-   			         lblSuccess.setText("Votre code: "+ClientMM.isSend());  			      
+   			         lblSuccess.setText("Votre code: "+ClientMM.isSend());
 				}else {
 					 //lblInfo.setText("Nom ou code incorrect !");
 				}

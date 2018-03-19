@@ -116,9 +116,10 @@ public class ClientGame extends JFrame {
 		
 		//Bouton Envoyer
 		JButton btnSend = new JButton("Envoyer");
-		JLabel lblCorrectPlace = new JLabel("Nombre de lettres correctement placées: ");
-		//lblCorrectPlace.setBounds(50, 200, 600, 30);
+		JLabel lblCorrectPlace = new JLabel("");
 		lblCorrectPlace.setFont(new Font("Tahoma", Font.CENTER_BASELINE, 16));
+		JLabel lblEffectPres = new JLabel("");
+		lblEffectPres.setFont(new Font("Tahoma", Font.CENTER_BASELINE, 16));
 		
 		JTextPane textListWords = new JTextPane();
 		textListWords.setEditable(false);
@@ -140,20 +141,35 @@ public class ClientGame extends JFrame {
 					lblResultat.setForeground(new Color(0, 255, 0));
 				}
 				else {   // Le joueur n'a pas trouvé le mot 
-					int comptCorrectPlace=0;
-					for(int i=0;i<5;i++){
-						// Nombre de lettres correctement placées
-						if(txtWord.getText().charAt(i)==motSecret.charAt(i)){
-							comptCorrectPlace++;
-						}			
-					}		
-					// Afficher le nombre de lettres correctement placées
-					lblCorrectPlace.setText("Nombre de lettres correctement placées: "+String.valueOf(comptCorrectPlace));
-					textListWords.setText(lblCorrectPlace.getText());
-					contentPane.add(textListWords);
-					// Afficher le fait qu'il n'a pas trouvé le mot 
-					lblResultat.setText("Vous avez raté le mot. Dommage!");
-					lblResultat.setForeground(new Color(255, 0, 0));
+					
+								/* ******Nombre de lettres correctement placées******** */
+								int comptCorrectPlace=0;
+								for(int i=0;i<5;i++){
+									// Nombre de lettres correctement placées
+									if(txtWord.getText().charAt(i)==motSecret.charAt(i)){
+										comptCorrectPlace++;
+									}			
+								}		
+								 /* *******Nombre de lettres effectivement présentes*******  */
+								int comptEffectPres=0;
+					            for (int i = 0; i < 5; i++) {
+					                for (int j = 0; j < 5; j++) {
+					                    if (txtWord.getText().charAt(j) == motSecret.charAt(i)) {
+					                    	comptEffectPres++;
+					                        break;
+					                    }
+					                }
+					            }
+					            
+								// Afficher le nombre de lettres correctement placées et le nombre de lettres effectivement presentes 
+								lblCorrectPlace.setText("Nombre de lettres correctement placées: "+String.valueOf(comptCorrectPlace)+"\nNombre de lettres effectivement présentes: "+String.valueOf(comptEffectPres));
+								textListWords.setText(lblCorrectPlace.getText());
+								contentPane.add(textListWords);
+								
+								// Afficher le fait qu'il n'a pas trouvé le mot 
+								lblResultat.setText("Vous avez raté le mot. Dommage!");
+								lblResultat.setForeground(new Color(255, 0, 0));			
+								
 					}
 			}
 		});
