@@ -18,7 +18,7 @@ public class Menu extends JFrame{
 	
 	private JPanel contentPane;
 	
-	public Menu(String nomPrenom) {
+	public Menu(String nom,String code) {
 		setTitle("Guess5");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,8 +45,8 @@ public class Menu extends JFrame{
 		lblScore.setBounds(15, 5, 350, 43);
 		contentPane.add(lblScore);
 		
-		//Infos sur le Joueur
-		JLabel lblJoueur = new JLabel("Joueur: "+nomPrenom);
+		//Nom du Joueur
+		JLabel lblJoueur = new JLabel("Joueur: "+nom);
 		lblJoueur.setForeground(new Color(0, 128, 0));
 		lblJoueur.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblJoueur.setBounds(370, 5, 350, 43);
@@ -57,8 +57,8 @@ public class Menu extends JFrame{
 		btnStartGame.setBackground(new Color(100, 149, 237));
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new ClientMM(nomPrenom);
-		        //new ClientGame(nomPrenom).setVisible(true);
+				new ClientMM("OTHER",nom,code);
+		        new ClientGame(nom,code).setVisible(true);
 		        setVisible(false);
 			}
 		});

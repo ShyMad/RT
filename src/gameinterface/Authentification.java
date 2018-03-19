@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entity.ClientMM;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -80,8 +83,9 @@ public class Authentification extends JFrame {
 		JButton btnLogIn = new JButton("Entrer");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(check()) {					
-				        new Menu(nomPrenom).setVisible(true);
+				new ClientMM("AUTH",txtNom.getText(),txtCode.getText());
+				if(ClientMM.isAuth()) {					
+				        new Menu(txtNom.getText(),txtCode.getText()).setVisible(true);
 				        setVisible(false);
 				}else {
 					 lblInfo.setText("Nom ou code incorrect !");
@@ -146,48 +150,5 @@ public class Authentification extends JFrame {
 		contentPane.add(btnMenu);
 		
 	}
-	public boolean check() {
-		File file = new File("authFile.txt");
-		boolean ok = false;
-		try {
-	      //Création de l'objet de lecture
-	      FileReader fr = new FileReader(file);
-	      //palyer = "";
-	    //  int i = 0; 
-	      int counter = 0;
-	      //String line[][] = null;
-	      BufferedReader br = null ;
-	      br = new BufferedReader(fr);
-	      int err =0;
-
-	     // LineNumberReader count = new LineNumberReader(fr);
-	      //counter = count.getLineNumber()+1;
-	      
-	    String stri="";
-		while ((stri = br.readLine()) != null){
-	        //  System.out.println(stri);
-	         String[] tab= stri.split(" ");
-	         if(tab[0].compareTo(txtNom.getText())==0 && tab[2].compareTo(txtCode.getText())==0){
-	             System.out.println("Welcome "+tab[0]+" "+tab[1]);
-	             this.nomPrenom=tab[0]+" "+tab[1];
-	             ok = true;
-	             err = 0;
-	             br.close();
-	             break;
-	             }
-	         else
-	             err++;
-   	        	counter++;
-	    	 }
-		if(err!=0) {
-			ok = false;
-			//System.err.println("Error");
-			}
-		} catch (FileNotFoundException e) {
-		      e.printStackTrace();
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	    }
-		return ok;
-	}
+	
 }

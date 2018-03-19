@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import entity.ClientMM;
 import entity.Partie;
 
 import java.awt.FlowLayout;
@@ -30,7 +31,8 @@ public class ClientGame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtWord;
-	private String nomPrenom;
+	private String nom;
+	private String code;
 	private String motSecret;
 	private Partie partie;
 	private long temps;
@@ -58,8 +60,9 @@ public class ClientGame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClientGame(String nomPrenom) {
-		this.nomPrenom = nomPrenom;
+	public ClientGame(String nom,String code) {
+		this.nom = nom;
+		this.code = code;
 		Random rand = new Random();
         String str="";
         String stri="";
@@ -92,7 +95,8 @@ public class ClientGame extends JFrame {
 		JButton btnExit = new JButton("Abandonner");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		        new Menu(nomPrenom).setVisible(true);
+				new ClientMM();
+		        new Menu(nom,code).setVisible(true);
 		        setVisible(false);
 			}
 		});
@@ -208,7 +212,7 @@ public class ClientGame extends JFrame {
 		contentPane.add(lblT);
 		
 		//Infos sur le Joueur
-		JLabel lblJoueur = new JLabel("Joueur: "+nomPrenom);
+		JLabel lblJoueur = new JLabel("Joueur: "+nom);
 		lblJoueur.setForeground(new Color(0, 128, 0));
 		lblJoueur.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblJoueur.setBounds(370, 5, 350, 43);

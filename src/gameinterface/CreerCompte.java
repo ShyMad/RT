@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import entity.ClientMM;
 import entity.Joueur;
 
 import javax.swing.JTextField;
@@ -130,7 +131,7 @@ public class CreerCompte extends JFrame {
 				btnAjouter.setEnabled(true);
 			}
 		});
-		txtNom.setBounds(237, 85, 130, 20);
+		txtNom.setBounds(237, 85, 170, 20);
 		contentPane.add(txtNom);
 		txtNom.setColumns(10);
 		
@@ -141,16 +142,16 @@ public class CreerCompte extends JFrame {
 				btnAjouter.setEnabled(true);
 			}
 		});
-		txtPrenom.setBounds(237, 128, 130, 20);
+		txtPrenom.setBounds(237, 128, 170, 20);
 		contentPane.add(txtPrenom);
 		txtPrenom.setColumns(10);
 		
 		JLabel lblVotreNom = new JLabel("Votre Nom :");
-		lblVotreNom.setBounds(49, 88, 69, 14);
+		lblVotreNom.setBounds(49, 88, 250, 14);
 		contentPane.add(lblVotreNom);
 		
 		JLabel lblVotrePrenom = new JLabel("Votre Prenom :");
-		lblVotrePrenom.setBounds(49, 131, 86, 14);
+		lblVotrePrenom.setBounds(49, 131, 250, 14);
 		contentPane.add(lblVotrePrenom);
 		
 		JLabel lblCrerVotreCompte = new JLabel("Cr\u00E9er Votre Compte!");
@@ -166,8 +167,8 @@ public class CreerCompte extends JFrame {
 		contentPane.add(btnAjouter);
 		
 		lblSuccess = new JLabel("");
-		lblSuccess.setForeground(new Color(244, 164, 96));
-		lblSuccess.setBounds(156, 236, 117, 14);
+		lblSuccess.setForeground(new Color(244, 0, 0));
+		lblSuccess.setBounds(156, 236, 250, 14);
 		contentPane.add(lblSuccess);
 		
 		btnConnexion = new JButton("Se Connecter");
@@ -197,6 +198,7 @@ public class CreerCompte extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				try {
+					new ClientMM("SEND",txtNom.getText(),txtPrenom.getText());
 					CreatePlayer();
 					
 				} catch (FileNotFoundException e) {
