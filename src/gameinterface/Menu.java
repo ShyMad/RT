@@ -57,7 +57,7 @@ public class Menu extends JFrame{
 		btnStartGame.setBackground(new Color(100, 149, 237));
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new ClientMM("OTHER",nom,code);
+				new ClientMM("START",nom,code);
 		        new ClientGame(nom,code).setVisible(true);
 		        setVisible(false);
 			}

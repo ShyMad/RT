@@ -28,63 +28,11 @@ import java.io.PrintWriter;
 public class ServeurMultiClient{
 
 	   private FileReader fr;
-	
-	 public void insertIntoAuthFile(Joueur j){
-	        
-	        String player = j.getNom()+" "+j.getPrenom()+" "+j.getCodeLicencie();
-	        File file = new File("authFile.txt");
-	        FileWriter fw;
-	         try {
-	            //Création de l'objet
-	            fw = new FileWriter(file,true);
-	           //On écrit la chaîne
-	            fw.write(player);
-	            //On ferme le flux
-	            fw.close();
-	        }catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	          } catch (IOException e) {
-	            e.printStackTrace();
-	          }
-	    }
-	    
-	    public boolean Authentif(String nom,String code){
-	        File file = new File("authFile.txt");
-	        BufferedReader br = null;
-	        String str;
-	        boolean response= false;
-	        int err =0;
-	       try {
-	           fr = new FileReader(file);
-	           br = new BufferedReader(fr);
-	           while ((str = br.readLine()) != null){
-	        //  System.out.println(stri);
-	                String[] tab= str.split(" ");
-	                if(tab[0].compareTo(nom)==0 && tab[2].compareTo(code) == 0){
-	                    response = true;
-	                    err = 0;
-	                    br.close();
-	                    break;
-	                }
-	                else
-	                    err++;
-	    	 }
-	            if(err !=0)
-	                response = false;
-	            //On ferme le flux
-	            fr.close();
-	        }catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	          } catch (IOException e) {
-	            e.printStackTrace();
-	          }
-	        return response;
-	    }
 	    
     public static void main(String[] args) {
         ServerSocket socket;
         try {
-        socket = new ServerSocket(6011);
+        socket = new ServerSocket(6012);
         Thread t = new Thread(new Service(socket));
         t.start();
         System.out.println("J'attends des connexions mais pas trop!");
@@ -328,11 +276,13 @@ class Service implements Runnable{
               nbrclient --;
               //closeConnexion = true;
               break;
-            default :             	
+            case "START" :             	
             	String mot = genWord();
             	game.add(tabCommand[1]+" "+tabCommand[2]+" "+mot+" "+DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date()));
-                toSend = mot;       
+                makeFileForClient(tabCommand[1], checkWord(mot));
+                toSend = "START "+mot;       
                break;
+               default: break;
          }
 		    out.println(toSend);
 			out.flush();

@@ -60,6 +60,11 @@ public class ClientGame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	/**
+	 * Constructeur ClientGame
+	 * @param nom
+	 * @param code
+	 */
 	public ClientGame(String nom,String code) {
 		this.nom = nom;
 		this.code = code;
